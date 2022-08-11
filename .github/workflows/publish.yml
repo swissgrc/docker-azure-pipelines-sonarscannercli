@@ -1,0 +1,72 @@
+name: Build
+
+on:
+  push:
+    branches: [develop]
+  release:
+    types: [published]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  build:
+    name: Build and push Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # renovate: tag=v3.0.2
+
+      # Extract metadata (tags, labels) for Docker
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a # renovate: tag=v4.0.1
+        with:
+          images: swissgrc/azure-pipelines-openjdk
+          tags: |
+            type=ref,event=tag
+            type=ref,event=pr
+            # set unstable tag for develop branch
+            type=raw,value=unstable,enable=${{ github.ref == format('refs/heads/{0}', 'develop') }}
+
+      # Build Docker image with Buildx
+      - name: Build Docker image
+        uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94 # tag=v3.1.1
+        with:
+          context: .
+          push: false
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # Scan Docker image (not for release builds since we will have multiple tags)
+      - name: Scan Docker image
+        if: github.event_name != 'release'
+        uses: aquasecurity/trivy-action@cb606dfdb0d2b3698ace62192088ef4f5360b24f # tag=0.6.2
+        with:
+          image-ref: ${{ steps.meta.outputs.tags }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      # Publish scan report to GitHub
+      - name: Publish scan report to GitHub
+        if: ${{ github.event_name != 'release' && always() }}
+        uses: github/codeql-action/upload-sarif@2ca79b6fa8d3ec278944088b4aa5f46912db5d63 # tag=v2.1.18
+        with:
+          sarif_file: trivy-results.sarif
+
+      # Login to Docker registry if not PR build
+      - name: Log in to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # renovate: tag=v2.0.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Publish Docker image for CI builds if not PR build
+      - name: Push container image
+        uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94 # tag=v3.1.1
+        if: github.event_name != 'pull_request'
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
