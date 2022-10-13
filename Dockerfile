@@ -11,7 +11,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install NodeJS
 
 # renovate: datasource=github-tags depName=nodejs/node extractVersion=^v(?<version>.*)$
-ENV NODE_VERSION=16.17.1
+ENV NODE_VERSION=18.11.0
 
 RUN apt-get update -y && \
   # Add NodeJS PPA
