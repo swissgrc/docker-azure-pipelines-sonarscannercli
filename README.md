@@ -39,7 +39,7 @@ The following example shows the container used for a deployment step which shows
 | Tag        | Description                                                                                   | Base Image                                | Size                                                                                                                                     |
 |------------|-----------------------------------------------------------------------------------------------|-------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
 | latest     | Latest stable release (from `main` branch)                                                    | swissgrc/azure-pipelines-openjdk:17.0.4.0 | ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/swissgrc/azure-pipelines-sonarscannercli/latest?style=flat-square)   |
-| unstable   | Latest unstable release (from `develop` branch)                                               | swissgrc/azure-pipelines-openjdk:17.0.4.1 | ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/swissgrc/azure-pipelines-sonarscannercli/unstable?style=flat-square) |
+| unstable   | Latest unstable release (from `develop` branch)                                               | swissgrc/azure-pipelines-openjdk:17.0.5.0 | ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/swissgrc/azure-pipelines-sonarscannercli/unstable?style=flat-square) |
 
 ### Configuration
 
