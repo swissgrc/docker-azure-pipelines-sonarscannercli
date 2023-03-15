@@ -36,7 +36,7 @@ COPY --from=build /etc/apt/sources.list.d/ /etc/apt/sources.list.d
 # Install NodeJS
 
 # renovate: datasource=github-tags depName=nodejs/node extractVersion=^v(?<version>.*)$
-ENV NODE_VERSION=16.19.1
+ENV NODE_VERSION=19.8.1
 
 RUN apt-get update -y && \
   # Install NodeJs
