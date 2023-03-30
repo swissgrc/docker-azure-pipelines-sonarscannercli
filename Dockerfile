@@ -15,7 +15,7 @@ RUN apt-get update -y && \
   # Install necessary dependencies
   apt-get install -y --no-install-recommends curl=${CURL_VERSION} && \
   # Add NodeJS PPA
-  curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+  curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 
 
 # Final image
@@ -36,7 +36,7 @@ COPY --from=build /etc/apt/sources.list.d/ /etc/apt/sources.list.d
 # Install NodeJS
 
 # renovate: datasource=github-tags depName=nodejs/node extractVersion=^v(?<version>.*)$
-ENV NODE_VERSION=16.19.1
+ENV NODE_VERSION=18.15.0
 
 RUN apt-get update -y && \
   # Install NodeJs
