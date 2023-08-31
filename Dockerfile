@@ -8,8 +8,8 @@ FROM base AS build
 # Make sure to fail due to an error at any stage in shell pipes
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# renovate: datasource=repology depName=debian_11/curl versioning=loose
-ENV CURL_VERSION=7.74.0-1.3+deb11u7
+# renovate: datasource=repology depName=debian_12/curl versioning=loose
+ENV CURL_VERSION=7.88.1-10+deb12u1
 
 RUN apt-get update -y && \
   # Install necessary dependencies
