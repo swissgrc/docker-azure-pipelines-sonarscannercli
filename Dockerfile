@@ -50,3 +50,17 @@ RUN apt-get update -y && \
   rm -rf /var/lib/apt/lists/* && \
   # Smoke test
   node -v
+
+# Install tools required by Sonar extension for Azure DevOps
+
+# renovate: datasource=repology depName=debian_12/unzip versioning=deb
+ENV UNZIP_VERSION=6.0
+
+RUN apt-get update -y && \
+  # Install unzip
+  apt-get install -y --no-install-recommends unzip=${UNZIP_VERSION}-28 && \
+  # Clean up
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* && \
+  # Smoke test
+  unzip --hh
