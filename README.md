@@ -46,7 +46,7 @@ These environment variables are supported:
 
 | Environment variable   | Default value              | Description                                                      |
 |------------------------|----------------------------|------------------------------------------------------------------|
-| NODE_VERSION           | `20.15.1-1nodesource1`     | Version of Node.js installed in the image.                       |
+| NODE_VERSION           | `20.16.0-1nodesource1`     | Version of Node.js installed in the image.                       |
 
 [Sonar Scanner CLI]: https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/
 [Azure Pipelines container jobs]: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/container-phases
